@@ -1,0 +1,15 @@
+{
+  "name": "amp-validator",
+  "version": "0.0.1",
+  "description": "A commandline validator for AMP Project",
+  "main": "index.js",
+  "author": "Mat Carey <opensource@dorightdigital.com>",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "zombie": "^4.2.1"
+  },
+  "bin": {
+    "amp-validator": "server.js"
+  }
+}
