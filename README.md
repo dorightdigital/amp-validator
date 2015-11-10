@@ -7,7 +7,7 @@ Usage
 ---
 
 ```
-npm install -g https://github.com/dorightdigital/amp-validator.git
+npm install -g amp-validator
 amp-validator https://www.theguardian.com/sport/2015/nov/10/russia-iaaf-facing-suspension-wada-doping-report/amp
 ```
 
