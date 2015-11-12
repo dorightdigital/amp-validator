@@ -1,15 +1,28 @@
 {
   "name": "amp-validator",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A commandline validator for AMP Project",
-  "main": "index.js",
+  "main": "core.js",
   "author": "Mat Carey <opensource@dorightdigital.com>",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.0.5",
     "colors": "^1.1.2",
+    "commander": "^2.9.0",
     "zombie": "^4.2.1"
   },
+  "scripts": {
+    "test": "mocha test/unit/*.spec.js test/**/*.spec.js && jslint *.js"
+  },
   "bin": {
-    "amp-validator": "server.js"
+    "amp-validator": "cli.js",
+    "ampvalidator": "cli.js"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "jslint": "^0.9.5",
+    "mocha": "^2.3.3",
+    "sinon": "^1.17.2",
+    "sinon-chai": "^2.8.0"
   }
 }
