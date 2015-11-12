@@ -1,3 +1,5 @@
+[ ![Codeship Status for dorightdigital/amp-validator](https://codeship.com/projects/872f9fe0-6bc2-0133-b63d-0e105eb8924a/status?branch=master)](https://codeship.com/projects/115332)
+
 AMP Validator
 ===
 
