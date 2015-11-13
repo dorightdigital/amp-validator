@@ -11,7 +11,6 @@ module.exports = {
       });
     }
     return promise.then(function (url) {
-      console.log('visiting URL', url);
       return browser.visit(url);
     });
   }

@@ -31,6 +31,9 @@ describe('Starting server for local files', function () {
   afterEach(function () {
     testScope.sandbox.restore();
   });
+  after(function () {
+    simpleServer.resetSingleton();
+  });
   it('should start a simple server when provided a relative path', function () {
     expect(http.createServer).to.have.been.called;
     expect(testScope.listener).to.have.been.calledWith(30000);
