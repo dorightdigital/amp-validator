@@ -7,37 +7,20 @@ module.exports = {
   visit: function (url) {
     return new Promise(function (res) {
       var browser = new Browser(conf),
-        errors = [],
-        completedSuccessfulValidation = false,
-        ampVersion,
-        tmp,
-        lastKnownStyle;
+        realCreateElement,
+        lastKnownStyle,
+        result = {
+          errors: []
+        };
 
       browser.visit(url, conf, function () {
-        if (errors.length > 0) {
-          res({
-            success: false,
-            errors: errors,
-            ampVersion: ampVersion
-          });
-        }
-        function detectDone() {
-          if (completedSuccessfulValidation) {
-            res({
-              success: true,
-              errors: [],
-              ampVersion: ampVersion
-            });
-          }
-        }
-
-        setInterval(detectDone);
+        res(result);
       });
 
-      tmp = browser.document.createElement;
+      realCreateElement = browser.document.createElement;
 
       browser.document.createElement = function (type) {
-        var out = tmp.apply(this, arguments);
+        var out = realCreateElement.apply(this, arguments);
         if (type === 'style') {
           lastKnownStyle = out;
         }
@@ -62,18 +45,14 @@ module.exports = {
         console.log('msg', msg);
         var match = msg.match(/– Version (\d+)/);
         if (match) {
-          ampVersion = parseInt(match[1], 10);
+          result.ampVersion = parseInt(match[1], 10);
         } else if (msg === 'AMP validation successful.') {
-          completedSuccessfulValidation = true;
-          res({
-            success: true,
-            errors: [],
-            ampVersion: ampVersion
-          });
+          result.success = true;
         }
       };
       browser.window.console.error = browser.window.console.warn = function (msg) {
-        errors.push(msg);
+        result.success = false;
+        result.errors.push(msg);
       };
     });
   }
