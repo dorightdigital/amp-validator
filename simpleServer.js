@@ -14,6 +14,7 @@ module.exports = {
         var file = [process.cwd(), req.url].join('');
         fs.readFile(file, function (err, content) {
           if (err) {
+            console.error('Failed to load local file %s', file);
             res.writeHead(404);
             res.end('Not Found');
           } else {
