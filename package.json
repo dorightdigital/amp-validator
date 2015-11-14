@@ -4,7 +4,11 @@
   "description": "A commandline validator for AMP Project",
   "main": "core.js",
   "author": "Mat Carey <opensource@dorightdigital.com>",
-  "license": "ISC",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dorightdigital/amp-validator.git"
+  },
   "dependencies": {
     "bluebird": "^3.0.5",
     "colors": "^1.1.2",
