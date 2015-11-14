@@ -1,5 +1,6 @@
 {
   "indent": 2,
   "sloppy": true,
-  "predef": ["describe", "it"]
+  "predef": ["describe", "it"],
+  "nomen": true
 }

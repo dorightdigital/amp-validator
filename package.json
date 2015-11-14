@@ -10,6 +10,7 @@
     "colors": "^1.1.2",
     "commander": "^2.9.0",
     "format-json": "^1.0.3",
+    "lodash": "^3.10.1",
     "zombie": "^4.2.1"
   },
   "scripts": {
