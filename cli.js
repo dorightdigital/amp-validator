@@ -9,9 +9,23 @@ var _ = require('lodash');
 
 function createTextFormatter(successColor, failColor) {
   return function (results) {
-    return _.map(results, function (result, url) {
-      return result.success ? successColor(url + ' passed validation') : failColor(url + ' failed validation');
-    }).join('\n');
+    return '\n' + _.map(results, function (result, url) {
+      if (result.success) {
+        return successColor(url + ' passed validation');
+      }
+      var lines = [
+        url + ' failed validation',
+      ];
+
+      if (result.success === undefined) {
+        lines = lines.concat([' -- Doesn\'t seem to be an AMP page']);
+      }
+
+      lines = lines.concat(_.map(result.errors, function (err) {
+        return [' --', 'Line', [err.line, err.char].join(':'), err.reason].join(' ');
+      }));
+      return failColor(lines.join('\n'));
+    }).join('\n\n\n') + '\n';
   };
 }
 
@@ -27,9 +41,13 @@ var formatters = {
 
 program
   .version('0.1.0')
-  .usage('[options] <file ...>')
+  .usage('[options] <file|url> [<file|url> ...]')
   .option('-o, --output <json|text|colorless-text>', 'The format of the output')
   .parse(process.argv);
+
+if (program.args.length === 0) {
+  program.outputHelp();
+}
 
 Promise.all(_.map(program.args, function (url) {
   return core.validate(url).then(function (result) {
