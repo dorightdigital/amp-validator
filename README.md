@@ -11,5 +11,12 @@ Usage
 ```
 npm install -g amp-validator
 amp-validator https://www.theguardian.com/sport/2015/nov/10/russia-iaaf-facing-suspension-wada-doping-report/amp
+amp-validator myProject/localExample.html
+amp-validator a.html b.html c.html || echo 'One of those failed'
 ```
+
+To output as JSON use `-o json`
+For no colors use `-o colorless-text`
+
+Supports multiple URLs, supports local files.
 
