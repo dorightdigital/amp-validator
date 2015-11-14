@@ -14,7 +14,7 @@ function createTextFormatter(successColor, failColor) {
         return successColor(url + ' passed validation');
       }
       var lines = [
-        url + ' failed validation',
+        url + ' failed validation'
       ];
 
       if (result.success === undefined) {
