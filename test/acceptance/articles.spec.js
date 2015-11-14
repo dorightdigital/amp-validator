@@ -7,11 +7,11 @@ var ampVersionObj = {
   releaseDate: '2015-11-12T23:48:02.206Z'
 };
 
-describe('Validator Functions', function () {
+xdescribe('Validator Functions', function () {
   beforeEach(function () {
     simpleServer.resetSingleton();
   });
-  xit('should mark validation successes', function (done) {
+  it('should mark validation successes', function (done) {
     core.validate('test/fixtures/valid/article.html').then(function (result) {
       expect(result).to.eql({
         success: true,
@@ -21,7 +21,7 @@ describe('Validator Functions', function () {
       done();
     }).catch(done);
   });
-  xit('should mark validation failures - no viewport', function (done) {
+  it('should mark validation failures - no viewport', function (done) {
     core.validate('test/fixtures/invalid/articleNoViewport.html').then(function (result) {
       expect(result).to.eql({
         success: false,
