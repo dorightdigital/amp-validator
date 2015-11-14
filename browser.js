@@ -15,9 +15,16 @@ module.exports = {
         };
 
       browser.visit(url, conf, function () {
-        var script = browser.document.querySelector('script'),
-          match = script && script.getAttribute('src') && script.getAttribute('src').match(/([\w]+)\.js/);
-        result.ampVersion.declared = match && match[1];
+        var script = browser.document.querySelectorAll('script'),
+          match;
+        Array.prototype.forEach.call(script, function (script) {
+          if (match) {
+            return;
+          }
+          var src = script.getAttribute('src');
+          match = src && src.match(/https:\/\/cdn\.ampproject\.org\/([\w]+)\.js/);
+        });
+        result.ampVersion.declared = (match && match[1]) || 'none';
         res(result);
       });
 
