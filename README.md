@@ -20,3 +20,8 @@ For no colors use `-o colorless-text`
 
 Supports multiple URLs, supports local files.
 
+Requirements
+---
+
+ - Node 4.2.1 - this is precisely the version needed at the moment (you can use `nvm install && nvm use` if you have nvm installed)
+ - `node-gyp` must be installed

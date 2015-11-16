@@ -86,5 +86,3 @@ Promise.all(_.map(program.args, function (fileOrUrl) {
     process.exit(0);
   }
 }).done();
-
-//var url = process.argv[2];

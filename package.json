@@ -24,6 +24,11 @@
     "amp-validator": "cli.js",
     "ampvalidator": "cli.js"
   },
+  "keywords": [
+    "amp",
+    "validator",
+    "Accelerated Mobile Pages"
+  ],
   "devDependencies": {
     "chai": "^3.4.1",
     "jslint": "^0.9.5",
