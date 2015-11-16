@@ -11,7 +11,11 @@ module.exports = {
         errors: []
       };
       if (browserResult.statusCode >= 300 || browserResult.statusCode < 200) {
-        result.errors.push('HTTP Status Code ' + browserResult.statusCode + ' was not success range.');
+        result.errors.push({
+          line: 0,
+          char: 0,
+          reason: 'HTTP Status Code ' + browserResult.statusCode + ' was not success range.'
+        });
       }
       _.each(browserResult.console.infos, function (args) {
         var msg = args[0],
