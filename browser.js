@@ -10,21 +10,19 @@ module.exports = {
         realCreateElement,
         lastKnownStyle,
         result = {
-          errors: [],
+          console: {
+            errors: [],
+            infos: []
+          },
+          scriptSrcs: [],
           ampVersion: {}
         };
 
       browser.visit(url, conf, function () {
-        var script = browser.document.querySelectorAll('script'),
-          match;
-        Array.prototype.forEach.call(script, function (script) {
-          if (match) {
-            return;
-          }
-          var src = script.getAttribute('src');
-          match = src && src.match(/https:\/\/cdn\.ampproject\.org\/([\w]+)\.js/);
+        result.statusCode = browser.resources[0].response.status;
+        Array.prototype.forEach.call(browser.document.querySelectorAll('script'), function (script) {
+          result.scriptSrcs.push(script.getAttribute('src'));
         });
-        result.ampVersion.declared = (match && match[1]) || 'none';
         res(result);
       });
 
@@ -52,25 +50,11 @@ module.exports = {
       browser.document.registerElement = function () {
         return true;
       };
-      browser.window.console.info = function (msg) {
-        var match = msg.match(/– Version (\d+)/);
-        if (match) {
-          result.ampVersion.precise = parseInt(match[1], 10);
-          result.ampVersion.releaseDate = JSON.parse(JSON.stringify(new Date(result.ampVersion.precise)));
-        } else if (msg === 'AMP validation successful.') {
-          result.success = true;
-        }
+      browser.window.console.info = function () {
+        result.console.infos.push(arguments);
       };
-      browser.window.console.error = browser.window.console.warn = function (msg) {
-        var match = msg.match(/[\w:\-]#development=1:(\d+):(\d+) ([\w\-\s#'"\(:\/\.\)]+)/);
-        result.success = false;
-        if (match) {
-          result.errors.push({
-            line: parseInt(match[1], 10),
-            char: parseInt(match[2], 10),
-            reason: match[3]
-          });
-        }
+      browser.window.console.error = browser.window.console.warn = function () {
+        result.console.errors.push(arguments);
       };
     });
   }
