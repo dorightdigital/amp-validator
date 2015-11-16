@@ -53,6 +53,10 @@ if (program.args.length === 0) {
 Promise.all(_.map(program.args, function (fileOrUrl) {
   var promise = Promise.resolve(fileOrUrl);
   if (fileOrUrl.indexOf('://') === -1) {
+    if (fileOrUrl.indexOf('../') > -1 || fileOrUrl.charAt(0) === '/') {
+      console.error(colors.red(['Specified file', colors.bold(fileOrUrl), 'is outside the current diretory - it is\'t going to work.'].join(' ')));
+      throw new Error('Unusable file path specified.');
+    }
     promise = simpleServer.makeSureSimpleServerIsStarted().then(function (conf) {
       return 'http://localhost:' + conf.port + '/' + fileOrUrl;
     });
