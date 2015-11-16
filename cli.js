@@ -6,6 +6,7 @@ var colors = require('colors');
 var formatJson = require('format-json');
 var core = require('./core');
 var _ = require('lodash');
+var simpleServer = require('./simpleServer');
 
 function createTextFormatter(successColor, failColor) {
   return function (results) {
@@ -49,12 +50,20 @@ if (program.args.length === 0) {
   program.outputHelp();
 }
 
-Promise.all(_.map(program.args, function (url) {
-  return core.validate(url).then(function (result) {
-    return {
-      originalUrl: url,
-      result: result
-    };
+Promise.all(_.map(program.args, function (fileOrUrl) {
+  var promise = Promise.resolve(fileOrUrl);
+  if (fileOrUrl.indexOf('://') === -1) {
+    promise = simpleServer.makeSureSimpleServerIsStarted().then(function (conf) {
+      return 'http://localhost:' + conf.port + '/' + fileOrUrl;
+    });
+  }
+  return promise.then(function (url) {
+    return core.validate(url).then(function (result) {
+      return {
+        originalUrl: url,
+        result: result
+      };
+    });
   });
 })).then(function (data) {
   var out = {};

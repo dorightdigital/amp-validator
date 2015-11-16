@@ -1,19 +1,9 @@
-var simpleServer = require('./simpleServer');
 var browser = require('./browser');
-var Promise = require('bluebird');
 var _ = require('lodash');
 
 module.exports = {
-  validate: function (fileOrUrl) {
-    var promise = Promise.resolve(fileOrUrl);
-    if (fileOrUrl.indexOf('://') === -1) {
-      promise = simpleServer.makeSureSimpleServerIsStarted().then(function (conf) {
-        return 'http://localhost:' + conf.port + '/' + fileOrUrl;
-      });
-    }
-    return promise.then(function (url) {
-      return browser.visit(url);
-    }).then(function (browserResult) {
+  validate: function (url) {
+    return browser.visit(url).then(function (browserResult) {
       var result = {
         ampVersion: {
           declared: 'none'
