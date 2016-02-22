@@ -12,8 +12,8 @@ module.exports = {
       };
       if (browserResult.statusCode >= 300 || browserResult.statusCode < 200) {
         result.errors.push({
-          line: 0,
-          char: 0,
+          line: -1,
+          char: -1,
           reason: 'HTTP Status Code ' + browserResult.statusCode + ' was not success range.'
         });
       }
@@ -29,7 +29,7 @@ module.exports = {
       });
       _.each(browserResult.console.errors, function (args) {
         var msg = args[0],
-          match = msg.match(/[\w:\-]#development=1:(\d+):(\d+) ([\w\-\s#'"\(:\/\.\)]+)/);
+          match = msg.match(/[\w:\-]:(\d+):(\d+) ([\w\-\s#'"\(:\/\.\)]+)/);
         if (match) {
           result.errors.push({
             line: parseInt(match[1], 10),

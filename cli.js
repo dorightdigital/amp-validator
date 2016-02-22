@@ -23,7 +23,13 @@ function createTextFormatter(successColor, failColor) {
       }
 
       lines = lines.concat(_.map(result.errors, function (err) {
-        return [' --', 'Line', [err.line, err.char].join(':'), err.reason].join(' ');
+        var out =  [' --'];
+        if (err.line > -1) {
+          out.push('Line');
+          out.push([err.line, err.char].join(':'));
+        }
+        out.push(err.reason);
+        return out.join(' ');
       }));
       return failColor(lines.join('\n'));
     }).join('\n\n\n') + '\n';

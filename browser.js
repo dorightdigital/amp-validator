@@ -1,11 +1,12 @@
 var Browser = require('zombie');
 var Promise = require('bluebird');
 var conf = {runScripts: true, strictSSL: false};
+var _ = require('lodash');
 
 
 module.exports = {
   visit: function (url) {
-    return new Promise(function (res) {
+    return new Promise(function (res, rej) {
       var browser = new Browser(conf),
         realCreateElement,
         lastKnownStyle,
@@ -14,17 +15,23 @@ module.exports = {
             errors: [],
             infos: []
           },
-          scriptSrcs: [],
-          ampVersion: {}
-        };
+          scriptSrcs: []
+        },
+        domNodePrototype;
 
-      browser.visit(url, conf, function () {
+      browser.visit(url, conf).then(function () {
         result.statusCode = browser.resources[0].response.status;
         Array.prototype.forEach.call(browser.document.querySelectorAll('script'), function (script) {
           result.scriptSrcs.push(script.getAttribute('src'));
         });
         res(result);
+      }).catch(function (e) {
+        rej(e);
       });
+
+      function noop() {
+        return;
+      }
 
       realCreateElement = browser.document.createElement;
 
@@ -35,6 +42,15 @@ module.exports = {
         }
         return out;
       };
+
+      domNodePrototype = browser.window.Node.prototype;
+
+      domNodePrototype.classList = domNodePrototype.classList || {};
+
+      _.forEach(['add', 'remove', 'toggle'], function (key) {
+        domNodePrototype.classList[key] = domNodePrototype.classList[key] || noop;
+      });
+
       setInterval(function () {
         var i;
         for (i in browser.document.styleSheets) {
