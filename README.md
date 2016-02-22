@@ -23,5 +23,5 @@ Supports multiple URLs, supports local files.
 Requirements
 ---
 
- - Node 4.2.1 - this is precisely the version needed at the moment (you can use `nvm install && nvm use` if you have nvm installed)
+ - Node 4.2.1 - this is precisely the version needed at the moment (you can use `nvm install 4.2.1 && nvm use 4.2.1` if you have nvm installed)
  - `node-gyp` must be installed

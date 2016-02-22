@@ -47,7 +47,7 @@ var formatters = {
 };
 
 program
-  .version('0.1.0')
+  .version('0.1.4')
   .usage('[options] <file|url> [<file|url> ...]')
   .option('-o, --output <json|text|colorless-text>', 'The format of the output')
   .parse(process.argv);
