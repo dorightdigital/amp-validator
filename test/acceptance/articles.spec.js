@@ -18,7 +18,7 @@ describe('Validator Functions', function () {
       done();
     }).catch(done);
   });
-  it('should mark validation failures - no style', function (done) {
+  xit('should mark validation failures - no style', function (done) {
     core.validate(this.baseUrl + '/test/fixtures/invalid/articleNoStyle.html').then(function (result) {
       expect(result.success).to.eql(false);
       expect(result.errors).to.eql([
