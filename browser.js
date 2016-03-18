@@ -22,7 +22,7 @@ module.exports = {
 
       function onComplete() {
         var i;
-        for (i = 0; i < intervals.length; i++) {
+        for (i = 0; i < intervals.length; i += 1) {
           clearInterval(intervals[i]);
         }
         browser.window.close();
