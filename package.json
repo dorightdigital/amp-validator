@@ -1,6 +1,6 @@
 {
   "name": "amp-validator",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A commandline validator for AMP Project",
   "main": "core.js",
   "author": "Mat Carey <opensource@dorightdigital.com>",
