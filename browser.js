@@ -1,6 +1,7 @@
 var Browser = require('zombie');
 var Promise = require('bluebird');
-var conf = {runScripts: true, strictSSL: false};
+var timeout = parseInt(process.env.AMP_VALIDATOR_TIMEOUT || '6000', 10);
+var conf = {runScripts: true, strictSSL: false, waitDuration: timeout};
 var _ = require('lodash');
 
 module.exports = {
@@ -36,7 +37,7 @@ module.exports = {
         });
         Promise.race([
           new Promise(function (res) {
-            setTimeout(res, parseInt(process.env.AMP_VALIDATOR_TIMEOUT || '6000', 10));
+            setTimeout(res, timeout);
           }),
           new Promise(function (res) {
             intervals.push(setInterval(function () {
